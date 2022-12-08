@@ -11,11 +11,22 @@ jobs:
         GH_TOKEN: ${{ github.token }}
       runs-on: ubuntu-latest    
       steps:
-        - name: Checkout
+        - name: Checkout branch
           uses: actions/checkout@v3
         - name: Create version-bump-branch
           run: |
-            git branch version-bump
+            git checkout -b version-bump
+        - name: Setup node
+          uses: actions/setup-node@v3
+          with:
+            node-version: "16"
+            cache: "npm"
+        - name: npm install
+          run: npm ci
+        - name: Create changelog  
+          run: npm run version
+        - name: Push changes to version-bump branch
+          run: |
             git push --set-upstream origin version-bump
             gh pr create --draft --title "New version bump available" --body "Sample Text"  --base main --head version-bump
 
