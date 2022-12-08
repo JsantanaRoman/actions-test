@@ -7,6 +7,8 @@ on:
 
 jobs:
   first-example:
+      env:
+        GH_TOKEN: ${{ github.token }}
       runs-on: ubuntu-latest    
       steps:
         - name: Checkout
@@ -16,8 +18,6 @@ jobs:
             git branch version-bump
             git push --set-upstream origin version-bump
             gh pr create --draft --title "New version bump available"  --base main --head version-bump
-          with:
-            GH_TOKEN: ${{ github.token }}
 
 
 
