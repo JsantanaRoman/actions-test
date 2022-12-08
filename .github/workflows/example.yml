@@ -24,7 +24,10 @@ jobs:
         - name: npm install
           run: npm ci
         - name: Create changelog  
-          run: npm run version
+          run: | 
+            npm run version
+            git add .
+            git commit -m "chore(package.json): changelog & version bump"
         - name: Push changes to version-bump branch
           run: |
             git push --set-upstream origin version-bump
