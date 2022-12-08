@@ -25,6 +25,8 @@ jobs:
           run: npm ci
         - name: Create changelog  
           run: | 
+            git config user.name github-actions
+            git config user.email github-actions@github.com
             npm run version
             git add .
             git commit -m "chore(package.json): changelog & version bump"
