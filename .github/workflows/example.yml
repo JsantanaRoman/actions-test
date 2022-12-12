@@ -41,3 +41,6 @@ jobs:
         - name: Skip version-bump branch
           if: ${{ steps.detect-pr.outputs == 1 }}
           run:  echo "branch already exist"
+
+        - name: view result
+          run: ${{ steps.detect-pr.outputs }}
