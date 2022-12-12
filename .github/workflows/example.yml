@@ -32,7 +32,7 @@ jobs:
             git commit -m "chore(package.json): changelog & version bump"
         - name: Detect PR
           id: detect-pr
-          run: echo "action_state = git ls-remote --heads git@github.com:user/repo.git branch-name | wc -l"  >> $GITHUB_ENV
+          run: echo "action_state = $(git ls-remote --heads git@github.com:JsantanaRoman/actions-test.git version-bump | wc -l)"  >> $GITHUB_ENV
         - name: view
           run: echo ${{ env.action_state }}
         - name: Push changes to version-bump branch 
