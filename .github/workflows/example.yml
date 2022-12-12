@@ -33,6 +33,8 @@ jobs:
         - name: Detect PR
           id: detect-pr
           run: echo "action_state= git ls-remote --heads git@github.com:user/repo.git branch-name | wc -l"
+        - name: view
+          run: echo ${{ env.action_state }}
         - name: Push changes to version-bump branch 
           if: ${{ env.action_state == 0 }}
           run: |
