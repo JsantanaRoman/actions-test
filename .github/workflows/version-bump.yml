@@ -19,7 +19,7 @@ jobs:
             node-version: "16"
             cache: "npm"
         - name: Run npm install
-          run: npm install
+          run: npm ci
         - name: Configure actions user
           run: |
             git config user.name github-actions
