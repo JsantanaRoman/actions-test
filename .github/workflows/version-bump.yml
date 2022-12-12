@@ -30,7 +30,7 @@ jobs:
         - name: Check for remotebranch
           run: echo "BRANCH_EXISTS = git ls-remote --heads git@github.com:JsantanaRoman/actions-test.git version-bump | wc -l" >> $GITHUB_ENV
         - name: View result
-          if: env.BRANCH_EXISTS
+          if: ! env.BRANCH_EXISTS
           run: echo "im Alive"
         - name: Create and switch to version-bump-branch
           run: |
