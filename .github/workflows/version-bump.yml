@@ -28,7 +28,7 @@ jobs:
           run: | 
             npm run version
         - name: Check for remotebranch
-          run: echo "example=$(git ls-remote --heads git@github.com:JsantanaRoman/actions-test.git version-bump | wc -l)" >> $GITHUB_ENV
+          run: echo "example=${{ git ls-remote --heads git@github.com:JsantanaRoman/actions-test.git version-bump | wc -l}}" >> $GITHUB_ENV
         - name: View result
           if: env.example
           run: echo "${{env.example}}"
