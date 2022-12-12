@@ -43,5 +43,5 @@ jobs:
               git checkout version-bump
               npm run version
               git add .
-              git commit -m "chore(package.json): changelog & version bump"
+              git commit -m "chore(package.json): changelog & version bump update"
               git push 
