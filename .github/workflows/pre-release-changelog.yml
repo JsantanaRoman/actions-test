@@ -1,4 +1,4 @@
-name: version-bump
+name: pre-bump
 
 on: 
   push:
@@ -6,11 +6,14 @@ on:
       - release/**
 
 jobs:
-  version-bump:
+  pre-bump:
       env:
         GH_TOKEN: ${{ github.token }}
+        RELEASE_BRANCH_NAME: ${{ github.ref_name }}
       runs-on: ubuntu-latest    
       steps:
+        - name: view
+          run: echo ${{ RELEASE_BRANCH_NAME }}
         - name: Checkout branch
           uses: actions/checkout@v3
         - name: Setup node
@@ -24,23 +27,23 @@ jobs:
           run: |
             git config user.name github-actions
             git config user.email github-actions@github.com
-        - name: Check remote for version-bump branch
+        - name: Check remote for pre-bump branch
           run: |
-            echo "buildCheck=$( git ls-remote origin version-bump | wc -l )" >> $GITHUB_ENV
-        - name: Create version-bump
-          if: env.buildCheck == 0
+            echo "branchCheck=$( git ls-remote origin pre-bump | wc -l )" >> $GITHUB_ENV
+        - name: Create pre-bump
+          if: env.branchCheck == 0
           run: |
-              git checkout -b version-bump
+              git checkout -b pre-bump
               npm run version
               git add .
               git commit -m "chore(package.json): changelog & version bump"
-              git push --set-upstream origin version-bump
-              gh pr create --draft --title "New version bump available" --body "Update package.json version and check CHANGELOG.md before merging"  --base main --head version-bump
-        - name: Update version-bump
-          if: env.buildCheck == 1
+              git push --set-upstream origin pre-bump
+              gh pr create --draft --title "New version bump available" --body "Update package.json version and check CHANGELOG.md before merging"  --base main --head pre-bump
+        - name: Update pre-bump
+          if: env.branchCheck == 1
           run: |
               git fetch --all
-              git checkout version-bump
+              git checkout pre-bump
               npm run version
               git add .
               git commit -m "chore(package.json): changelog & version bump update"
