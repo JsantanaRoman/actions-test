@@ -40,7 +40,7 @@ jobs:
           if: env.example == 1
           run: |
               git fetch --all
-              git checkout origin/version-bump
+              git checkout version-bump
               npm run version
               git add .
               git commit -m "chore(package.json): changelog & version bump"
