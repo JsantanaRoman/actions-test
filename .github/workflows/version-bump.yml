@@ -29,8 +29,8 @@ jobs:
             npm run version
         - name: Check for remotebranch
           run: |
-            echo "example=$( git ls-remote )" >> $GITHUB_ENV
-            echo git ls-remote
+            echo "example=$( git ls-remote origin version-bump )" >> $GITHUB_ENV
+            echo git ls-remote origin version-bump
         - name: View result
           run: echo "${{env.example}}"
         - name: Create and switch to version-bump-branch
