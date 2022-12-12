@@ -30,7 +30,7 @@ jobs:
         - name: Check for remotebranch
           run: |
             echo "example=$( git ls-remote )" >> $GITHUB_ENV
-            echo "${{env.example}}"
+            echo git ls-remote
         - name: View result
           run: echo "${{env.example}}"
         - name: Create and switch to version-bump-branch
