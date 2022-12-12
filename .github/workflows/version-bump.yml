@@ -32,6 +32,9 @@ jobs:
         - name: View result
           if: ${{ !env.BRANCH_EXISTS }}
           run: echo "im Alive"
+        - name: View result
+          if: ${{ env.BRANCH_EXISTS }}
+          run: echo "im DEad"
         - name: Create and switch to version-bump-branch
           run: |
             git checkout -b version-bump
