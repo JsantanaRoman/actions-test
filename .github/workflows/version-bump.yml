@@ -39,6 +39,7 @@ jobs:
         - name: Update version-bump
           if: env.example == 1
           run: |
+              git fetch --all
               git checkout origin/version-bump
               npm run version
               git add .
