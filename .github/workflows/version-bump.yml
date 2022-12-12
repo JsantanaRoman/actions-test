@@ -31,10 +31,7 @@ jobs:
           run: echo "BRANCH_EXISTS = git ls-remote --heads git@github.com:JsantanaRoman/actions-test.git version-bump | wc -l" >> $GITHUB_ENV
         - name: View result
           if: ${{ !env.BRANCH_EXISTS }}
-          run: echo "im Alive"
-        - name: View result
-          if: ${{ env.BRANCH_EXISTS }}
-          run: echo "im DEad"
+          run: echo "$env.BRANCH_EXISTS"
         - name: Create and switch to version-bump-branch
           run: |
             git checkout -b version-bump
