@@ -1,7 +1,7 @@
 name: version-bump
 
 on: 
-  create:
+  push:
     branches:
       - release/**
 
@@ -20,19 +20,24 @@ jobs:
             cache: "npm"
         - name: Run npm install
           run: npm install
-        - name: Create changelog  
-          run: | 
-            npm run version
-        - name: Create and switch to version-bump-branch
+        - name: Configure actions user
           run: |
             git config user.name github-actions
             git config user.email github-actions@github.com
-            git fetch
-            git checkout -B version-bump
+        - name: Create changelog
+          run: | 
+            npm run version
+        - name: Check for remotebranch
+          run: echo "branch_exist = git ls-remote --heads git@github.com:JsantanaRoman/actions-test.git version-bump | wc -l" >> $GITHUB_ENV
+
+        - name: View result
+          run: echo "${{env.branch_exist}}"
+        - name: Create and switch to version-bump-branch
+          run: |
+            git checkout -b version-bump
             git add .
             git commit -m "chore(package.json): changelog & version bump"
         - name: Configure PR
           run: |
-              git pull origin version-bump
               git push --set-upstream origin version-bump
               gh pr create --draft --title "New version bump available" --body "Update package.json version and check CHANGELOG.md before merging"  --base main --head version-bump
