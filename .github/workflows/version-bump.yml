@@ -6,7 +6,7 @@ on:
       - release/**
 
 jobs:
-  first-example:
+  version-bump:
       env:
         GH_TOKEN: ${{ github.token }}
       runs-on: ubuntu-latest    
@@ -27,19 +27,11 @@ jobs:
           run: |
             git config user.name github-actions
             git config user.email github-actions@github.com
-            git checkout -b version-bump
+            git fetch
+            git checkout -B version-bump
             git add .
             git commit -m "chore(package.json): changelog & version bump"
-        - name: Detect PR
-          id: detect-pr
-          run: echo "action_state = $(git ls-remote --heads git@github.com:JsantanaRoman/actions-test.git version-bump | wc -l)"  >> $GITHUB_ENV
-        - name: view
-          run: echo ${{ env.action_state }}
-        - name: Push changes to version-bump branch 
-          if: ${{ !env.action_state }}
+        - name: Configure PR
           run: |
               git push --set-upstream origin version-bump
               gh pr create --draft --title "New version bump available" --body "Update package.json version and check CHANGELOG.md before merging"  --base main --head version-bump
-        - name: Skip version-bump branch
-          if: ${{ env.action_state }}
-          run:  echo "branch already exist"
