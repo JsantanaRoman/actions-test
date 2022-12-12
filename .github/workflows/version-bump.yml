@@ -28,10 +28,14 @@ jobs:
           run: | 
             npm run version
         - name: Check for remotebranch
-          run: echo "branch_exist = git ls-remote --heads git@github.com:JsantanaRoman/actions-test.git version-bump | wc -l" >> $GITHUB_ENV
+          run: echo "BRANCH_EXISTS = git ls-remote --heads git@github.com:JsantanaRoman/actions-test.git version-bump | wc -l" >> $GITHUB_ENV
 
         - name: View result
-          run: echo "${{env.branch_exist}}"
+          if: env.BRANCH_EXISTS
+          run: echo "im Alive"
+        - name: View result 2
+          if: ! env.BRANCH_EXISTS
+          run: echo "im dead"
         - name: Create and switch to version-bump-branch
           run: |
             git checkout -b version-bump
