@@ -36,10 +36,10 @@ jobs:
         - name: view
           run: echo ${{ env.action_state }}
         - name: Push changes to version-bump branch 
-          if: ${{ env.action_state }} == 0 
+          if: ${{ env.action_state }} == 1 
           run: |
               git push --set-upstream origin version-bump
               gh pr create --draft --title "New version bump available" --body "Update package.json version and check CHANGELOG.md before merging"  --base main --head version-bump
         - name: Skip version-bump branch
-          if: ${{ env.action_state }} == 1
+          if: ${{ env.action_state }} == 0
           run:  echo "branch already exist"
