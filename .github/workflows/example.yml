@@ -37,4 +37,5 @@ jobs:
               gh pr create --draft --title "New version bump available" --body "Update package.json version and check CHANGELOG.md before merging"  --base main --head version-bump
             else
               echo "branch already exist"
+            fi
 
