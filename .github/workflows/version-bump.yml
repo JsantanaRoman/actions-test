@@ -39,8 +39,7 @@ jobs:
         - name: Update version-bump
           if: env.example == 1
           run: |
-              git checkout -b version-bump
-              git pull origin version-bump
+              git checkout origin/version-bump
               npm run version
               git add .
               git commit -m "chore(package.json): changelog & version bump"
