@@ -39,5 +39,5 @@ jobs:
               git push --set-upstream origin version-bump
               gh pr create --draft --title "New version bump available" --body "Update package.json version and check CHANGELOG.md before merging"  --base main --head version-bump
         - name: Skip version-bump branch
-          if: ${{ steps.detect-pr.outputs == 0 }}
+          if: ${{ steps.detect-pr.outputs == 1 }}
           run:  echo "branch already exist"
