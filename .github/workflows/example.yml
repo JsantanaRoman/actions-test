@@ -43,4 +43,4 @@ jobs:
           run:  echo "branch already exist"
 
         - name: view result
-          run: ${{ steps.detect-pr.outputs.* }}
+          run: ${{join(steps.detect-pr.outputs.*, '\n')}}
