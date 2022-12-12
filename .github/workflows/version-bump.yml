@@ -29,13 +29,9 @@ jobs:
             npm run version
         - name: Check for remotebranch
           run: echo "BRANCH_EXISTS = git ls-remote --heads git@github.com:JsantanaRoman/actions-test.git version-bump | wc -l" >> $GITHUB_ENV
-
         - name: View result
           if: env.BRANCH_EXISTS
           run: echo "im Alive"
-        - name: View result 2
-          if: ! env.BRANCH_EXISTS
-          run: echo "im dead"
         - name: Create and switch to version-bump-branch
           run: |
             git checkout -b version-bump
