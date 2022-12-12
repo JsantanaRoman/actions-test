@@ -27,17 +27,24 @@ jobs:
         - name: Create changelog
           run: | 
             npm run version
-        - name: Check for remotebranch
+        - name: Check remote for version-bump
           run: |
             echo "example=$( git ls-remote origin version-bump | wc -l )" >> $GITHUB_ENV
         - name: View result
-          run: echo "${{env.example}}"
+          run: echo "${{env.example == 1 }}"
         - name: Create and switch to version-bump-branch
           run: |
             git checkout -b version-bump
             git add .
             git commit -m "chore(package.json): changelog & version bump"
         - name: Configure PR
+          if: env.example == 0
           run: |
               git push --set-upstream origin version-bump
               gh pr create --draft --title "New version bump available" --body "Update package.json version and check CHANGELOG.md before merging"  --base main --head version-bump
+        - name: Update branch
+          if: env.example == 1
+          run: |
+              git pull origin version-bump
+              git push origin version-bump
+
