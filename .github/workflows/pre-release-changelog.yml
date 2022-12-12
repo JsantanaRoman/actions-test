@@ -13,7 +13,7 @@ jobs:
       runs-on: ubuntu-latest    
       steps:
         - name: view
-          run: echo ${{ RELEASE_BRANCH_NAME }}
+          run: echo ${{ env.RELEASE_BRANCH_NAME }}
         - name: Checkout branch
           uses: actions/checkout@v3
         - name: Setup node
