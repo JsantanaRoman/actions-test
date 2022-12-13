@@ -11,8 +11,6 @@ jobs:
         TAG_NUMBER: ${{  github.ref_name  }}
       runs-on: ubuntu-latest    
       steps:
-        - name: view value
-          run: echo "${{ github.ref_name }}"
         - name: Checkout branch
           uses: actions/checkout@v3
         - name: Setup node
@@ -28,10 +26,10 @@ jobs:
             git config user.email github-actions@github.com
         - name: Create release-changelog
           run: |
-              git checkout -b release-changelog
+              git checkout -b ${{ env.TAG_NUMBER }}__release-changelog
               npm run version
               git add .
               git commit -m "chore(CHANGELOG.md): new changelog"
-              git push --set-upstream origin ${{ env.TAG_NUMBER}}__release-changelog
-              gh pr create --draft --title "New changelog available" --body "Check CHANGELOG.md before merging"  --base main --head ${{ env.TAG_NUMBER}}__release-changelog
+              git push --set-upstream origin ${{ env.TAG_NUMBER }}__release-changelog
+              gh pr create --draft --title "New changelog available" --body "Check CHANGELOG.md before merging"  --base main --head ${{ env.TAG_NUMBER }}__release-changelog
   
