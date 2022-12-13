@@ -1,4 +1,4 @@
-name: pre-release-changelog
+name: pre-changelog
 
 on: 
   push:
@@ -6,7 +6,7 @@ on:
       - release/**
 
 jobs:
-  pre-release-changelog:
+  pre-changelog:
       env:
         GH_TOKEN: ${{ github.token }}
         RELEASE_NAME: ${{  github.ref_name  }}
