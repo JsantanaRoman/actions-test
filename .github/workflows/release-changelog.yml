@@ -8,7 +8,7 @@ jobs:
   release-changelog:
       env:
         GH_TOKEN: ${{ github.token }}
-        NAMEIT: ${{  github.ref_name  }}
+        TAG_NUMBER: ${{  github.ref_name  }}
       runs-on: ubuntu-latest    
       steps:
         - name: view value
@@ -32,6 +32,6 @@ jobs:
               npm run version
               git add .
               git commit -m "chore(CHANGELOG.md): new changelog"
-              git push --set-upstream origin release-changelog
-              gh pr create --draft --title "New changelog available" --body "Check CHANGELOG.md before merging"  --base main --head release-changelog
+              git push --set-upstream origin ${{ env.TAG_NUMBER}}__release-changelog
+              gh pr create --draft --title "New changelog available" --body "Check CHANGELOG.md before merging"  --base main --head ${{ env.TAG_NUMBER}}__release-changelog
   
