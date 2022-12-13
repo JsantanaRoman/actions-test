@@ -1,0 +1,34 @@
+name: release-changelog
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  release-changelog:
+      env:
+        GH_TOKEN: ${{ github.token }}
+      runs-on: ubuntu-latest    
+      steps:
+        - name: Checkout branch
+          uses: actions/checkout@v3
+        - name: Setup node
+          uses: actions/setup-node@v3
+          with:
+            node-version: "16"
+            cache: "npm"
+        - name: Run npm install
+          run: npm ci
+        - name: Configure actions user
+          run: |
+            git config user.name github-actions
+            git config user.email github-actions@github.com
+        - name: Create release-changelog
+          run: |
+              git checkout -b release-changelog
+              npm run version
+              git add .
+              git commit -m "chore(CHANGELOG.md): new changelog"
+              git push --set-upstream origin release-changelog
+              gh pr create --draft --title "New changelog available" --body "Check CHANGELOG.md before merging"  --base main --head release-changelog
+  
